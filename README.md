@@ -3,7 +3,7 @@ Rock 'Em Sock 'Em Rational Agents
 
 See <http://en.wikipedia.org/wiki/Fictitious_play> for the gist.
 
-See [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma), [stag hunt](http://en.wikipedia.org/wiki/Stag_hunt), [deadlock](http://en.wikipedia.org/wiki/Deadlock_%28game_theory%29), and [volunteer's dilemma](http://en.wikipedia.org/wiki/Volunteer%27s_dilemma) for examples of games RESERA can play. See [normal-form game](http://en.wikipedia.org/wiki/Normal-form_game) for 
+See [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma), [stag hunt](http://en.wikipedia.org/wiki/Stag_hunt), [deadlock](http://en.wikipedia.org/wiki/Deadlock_%28game_theory%29), and [volunteer's dilemma](http://en.wikipedia.org/wiki/Volunteer%27s_dilemma) for examples of games RESERA can play. See [normal-form game](http://en.wikipedia.org/wiki/Normal-form_game) for the most confusing a general explanation.
 
 Usage
 -----
