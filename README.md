@@ -7,9 +7,10 @@ Usage
 -----
 
 The board is hard-coded into resara.pl, so edit and run it:
-   $ perl resera.pl
-   Player Column:  (100.000000%, 0.000000%)
-   Player Row:     (100.000000%, 0.000000%)
+
+    $ perl resera.pl
+    Player Column:  (100.000000%, 0.000000%)
+    Player Row:     (100.000000%, 0.000000%)
 
 TODO
 -----
