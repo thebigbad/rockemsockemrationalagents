@@ -8,17 +8,29 @@ See [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma), [st
 Usage
 -----
 
-The board is hard-coded into resara.pl, so edit and run it:
+To test payoff matrix:
 
-    $ perl resera.pl
-    Player Column:  (100.000000%, 0.000000%)
-    Player Row:     (100.000000%, 0.000000%)
+              Choice 1 | Choice 2
+              -------------------
+    Choice 1 | a, b    | c, d
+    Choice 2 | e, f    | g, h
+
+Run resera.pl with the arguments
+
+    $ perl resera.pl a b c d e f g h
+
+For example, using the Example PD payoff matrix for the wiki page [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma):
+
+    $ perl resera.pl 3 3 0 5 5 0 1 1
+    Player Column:  (0.000000%, 100.000000%)
+    Player Row:     (0.000000%, 100.000000%)
+
+The output describes the strategy our players mimicked (both players always chose the second option, e.g. "always defect").
 
 TODO
 -----
 
 * expand summary
-* take the board as command line arguments
 * ouput the board
 * there's a lot of room to optimise (precomputing $a-$b-$c+$d instead of finding it n times comes immediately to mind)--faster means more iterations
 * add a fun license

@@ -3,12 +3,19 @@
 use strict;
 use warnings;
 
-my $choices = [[0,0], [0,0]];
+# default taken from http://en.wikipedia.org/wiki/Prisoner%27s_dilemma
+my $grid = [
+  [[3, 3], [0, 5]],
+  [[5, 0], [1, 1]]
+];
+if (scalar @ARGV == 8) {
+  $grid = [
+    [[$ARGV[0], $ARGV[1]], [$ARGV[2], $ARGV[3]]],
+    [[$ARGV[4], $ARGV[5]], [$ARGV[6], $ARGV[7]]]
+  ];
+}
 
-my $grid =
-#	col 0  col 1
-[[[1,1], [0,0]],	# row 0
- [[0,0], [0,0]]];	# row 1
+my $choices = [[0,0], [0,0]];
 
 my $iterations = 10000;
 
