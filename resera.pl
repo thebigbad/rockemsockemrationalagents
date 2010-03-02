@@ -15,10 +15,10 @@ if (scalar @ARGV == 8) {
   ];
 }
 
-my $pm =  "          Choice 1 | Choice 2\n" .
-          "          -------------------\n" .
-          "Choice 1 | %d, %d    | %d, %d\n" .
-          "Choice 2 | %d, %d    | %d, %d\n\n";
+my $pm =  "           Choice 1 | Choice 2\n" .
+          "          --------------------\n" .
+          "Choice 1 | %3d, %3d | %3d, %3d\n" .
+          "Choice 2 | %3d, %3d | %3d, %3d\n\n";
 printf(
   $pm,
   $grid->[0][0][0],
@@ -42,24 +42,16 @@ for (my $n = 0; $n < $iterations; $n++) {
   $choices->[1][$this_choice->[1]]++;
 }
 
-printf("Player Column:\t(%f%%, %f%%)\n",
+printf("Player Column:\t(%.0f%%, %.0f%%)\n",
   ($choices->[0][0] / $iterations) * 100,
   ($choices->[0][1] / $iterations) * 100);
-printf("Player Row:\t(%f%%, %f%%)\n",
+printf("Player Row:\t(%.0f%%, %.0f%%)\n",
   ($choices->[1][0] / $iterations) * 100,
   ($choices->[1][1] / $iterations) * 100);
 
 sub player_outcome {
   my ($player,$row,$col,$grid) = @_;
   return $grid->[$row][$col][$player];
-}
-
-sub outcomes {
-  my ($row,$col,$grid) = @_;
-  return [
-    player_outcome(0,$row,$col,$grid),
-    player_outcome(1,$row,$col,$grid)
-  ];
 }
 
 sub player_slope {
@@ -96,9 +88,10 @@ sub choice {
   foreach my $player (0,1) {
     my $other = ($player==0) ? 1 : 0;
     my $slope = player_slope(
-    $player,
-    $dist->[$other],
-    $grid);
+      $player,
+      $dist->[$other],
+      $grid
+    );
     if ($slope > 0) {
       $this_choice->[$player] = 0;
     }
