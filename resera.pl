@@ -15,6 +15,23 @@ if (scalar @ARGV == 8) {
   ];
 }
 
+my $pm =  "          Choice 1 | Choice 2\n" .
+          "          -------------------\n" .
+          "Choice 1 | %d, %d    | %d, %d\n" .
+          "Choice 2 | %d, %d    | %d, %d\n\n";
+printf(
+  $pm,
+  $grid->[0][0][0],
+  $grid->[0][0][1],
+  $grid->[0][1][0],
+  $grid->[0][1][1],
+  $grid->[1][0][0],
+  $grid->[1][0][1],
+  $grid->[1][1][0],
+  $grid->[1][1][1]
+);
+
+
 my $choices = [[0,0], [0,0]];
 
 my $iterations = 10000;

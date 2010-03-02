@@ -22,6 +22,11 @@ Run resera.pl with the arguments
 For example, using the Example PD payoff matrix for the wiki page [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma):
 
     $ perl resera.pl 3 3 0 5 5 0 1 1
+              Choice 1 | Choice 2
+              -------------------
+    Choice 1 | 3, 3    | 0, 5
+    Choice 2 | 5, 0    | 1, 1
+
     Player Column:  (0.000000%, 100.000000%)
     Player Row:     (0.000000%, 100.000000%)
 
@@ -31,6 +36,5 @@ TODO
 -----
 
 * expand summary
-* ouput the board
 * there's a lot of room to optimise (precomputing $a-$b-$c+$d instead of finding it n times comes immediately to mind)--faster means more iterations
 * add a fun license
