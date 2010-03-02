@@ -37,4 +37,4 @@ TODO
 
 * expand summary
 * there's a lot of room to optimise (precomputing $a-$b-$c+$d instead of finding it n times comes immediately to mind)--faster means more iterations
-* add a fun license
+* add a fun license (maybe [WTFPL](http://en.wikipedia.org/wiki/Do_What_The_Fuck_You_Want_To_Public_License)?)
