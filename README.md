@@ -1,9 +1,17 @@
 Rock 'Em Sock 'Em Rational Agents
 ====
 
-See <http://en.wikipedia.org/wiki/Fictitious_play> for the gist.
+During my first Game Theory class, I read an article about (fictitious play)[http://en.wikipedia.org/wiki/Fictitious_play), a demonstration of how two rational agents might converge on Nash equilibrium in [normal-form games](http://en.wikipedia.org/wiki/Normal-form_game) by following a simple strategy:
 
-See [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma), [stag hunt](http://en.wikipedia.org/wiki/Stag_hunt), [deadlock](http://en.wikipedia.org/wiki/Deadlock_%28game_theory%29), and [volunteer's dilemma](http://en.wikipedia.org/wiki/Volunteer%27s_dilemma) for examples of games RESERA can play. See [normal-form game](http://en.wikipedia.org/wiki/Normal-form_game) for the most confusing a general explanation.
+* Given the frequency with which your opponent has chosen the first option, determine the liklihood that they will choose it for this game. If your opponent has not played this game with your before, set the liklihood to 50%.
+* Given the liklihood your opponent will choose the first option and the payoff matrix, determine the expected value of both of your options.
+* Given the expected value of both of your options, choose the option with the highest expected value. If both options have the same expected value, choose randomly.
+
+The idea is that two agents following this strategy and playing the same game over and over will mimic the behavior of rational agents who found the Nash equlibria of a given game and chose an appropriate mixed strategy.
+
+That night I wrote a perl script to pit two such players againest each other to see if it worked. Not only did the resulting program validate the article, but it helped me to gain some intuition about Nash equlibria in normal-form games. I'm sticking it on github under a friendly license it the hope that it helps some other game theory nerds out, too.
+
+See [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma), [stag hunt](http://en.wikipedia.org/wiki/Stag_hunt), [deadlock](http://en.wikipedia.org/wiki/Deadlock_%28game_theory%29), and [volunteer's dilemma](http://en.wikipedia.org/wiki/Volunteer%27s_dilemma) for examples of normal form games. Once you've gotten the hang of it (where "it" is "you need to pick 8 numbers to go in the boxes for the payoff matrix"), try creating your own games to see if anything interesting happens.
 
 Usage
 -----
@@ -32,11 +40,7 @@ For example, using the Example PD payoff matrix for the wiki page [prisoner's di
 
 The output describes the strategy our players mimicked (both players always chose the second option, e.g. "always defect").
 
-TODO
------
-
-* expand summary
-* there's a lot of room to optimise (precomputing $a-$b-$c+$d instead of finding it n times comes immediately to mind)--faster means more iterations
+One important thing to remember is that the agents act randomly when they don't have any information or when both options are just as good. This means as your games grow more complicated than the prisoner's dilemma (and gain multiple absorbing states), you'll start to notice different behavior on running the same board through more than once. Don't panic--our hard-working little agents have stumbled into an absorbing state at random and will remain there until the next run.
 
 License
 -----
