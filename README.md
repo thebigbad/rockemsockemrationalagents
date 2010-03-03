@@ -18,10 +18,10 @@ Usage
 
 To test payoff matrix:
 
-              Choice 1 | Choice 2
-              -------------------
-    Choice 1 | a, b    | c, d
-    Choice 2 | e, f    | g, h
+            Column 1 | Column 2
+           ---------------------
+    Row 1 |   a,   b |   c,   d
+    Row 2 |   e,   f |   g,   h
 
 Run resera.pl with the arguments
 
@@ -30,13 +30,13 @@ Run resera.pl with the arguments
 For example, using the Example PD payoff matrix for the wiki page [prisoner's dilemma](http://en.wikipedia.org/wiki/Prisoner%27s_dilemma):
 
     $ perl resera.pl 3 3 0 5 5 0 1 1
-              Choice 1 | Choice 2
-              -------------------
-    Choice 1 | 3, 3    | 0, 5
-    Choice 2 | 5, 0    | 1, 1
+            Column 1 | Column 2
+           ---------------------
+    Row 1 |   3,   3 |   0,   5
+    Row 2 |   5,   0 |   1,   1
 
-    Player Column:  (0.000000%, 100.000000%)
-    Player Row:     (0.000000%, 100.000000%)
+    Player 0: (0.000%, 100.000%)
+    Player 1: (0.000%, 100.000%)
 
 The output describes the strategy our players mimicked (both players always chose the second option, e.g. "always defect").
 
