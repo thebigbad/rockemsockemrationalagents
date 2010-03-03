@@ -71,20 +71,12 @@ sub p_of_first_choice {
   return $n_chose_first / $total_choices;
 }
 
-sub distributions {
-  my $choices = shift;
-  return [
-    p_of_first_choice($choices->[0][0], $choices->[0][1]),
-    p_of_first_choice($choices->[1][0], $choices->[1][1])
-  ];
-}
-
 sub choice {
   my ($choices, $b, $m) = @_;
-  my $dist = distributions($choices);
   my $this_choice = [undef,undef];
   foreach my $player (0,1) {
-    my $other_p =$dist->[($player + 1) % 2];
+    my $o = ($player + 1) % 2;
+    my $other_p = p_of_first_choice($choices->[$o][0], $choices->[$o][1]);
     my $slope = $m->[$player]*$other_p + $b->[$player];
     if ($slope == 0) {
      $this_choice->[$player] = int(rand() + .5);
