@@ -37,3 +37,10 @@ TODO
 
 * expand summary
 * there's a lot of room to optimise (precomputing $a-$b-$c+$d instead of finding it n times comes immediately to mind)--faster means more iterations
+
+License
+-----
+
+Copyright 2010 Ryan Wolf <rwolf@borderstylo.com>
+
+Rock 'Em Sock 'Em Rational agents is released under the romantic WTF public license. See LICENSE for more details.

@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+# Copyright 2010 Ryan Wolf <rwolf@borderstylo.com>
+#
+# This file is part of Rock 'Em Sock 'Em Rational Agents and is released under
+# the romantic WTF public license. See LICENSE for more details.
 
 use strict;
 use warnings;
