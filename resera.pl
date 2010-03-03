@@ -7,82 +7,89 @@
 use strict;
 use warnings;
 
-# default taken from http://en.wikipedia.org/wiki/Prisoner%27s_dilemma
-my $grid = [
-  [[3, 3], [0, 5]],
-  [[5, 0], [1, 1]]
+my $iterations = 100000;
+
+my $frequencies = [
+  [0, 0],
+  [0, 0]
 ];
+
+# default taken from http://en.wikipedia.org/wiki/Prisoner%27s_dilemma
+my $payoff_matrices = [
+  [
+    [3, 0],
+    [5, 1]
+  ],
+  [
+    [3, 0],
+    [5, 1]
+  ]
+];
+
+# also takes command line arguments
 if (scalar @ARGV == 8) {
-  $grid = [
-    [[$ARGV[0], $ARGV[1]], [$ARGV[2], $ARGV[3]]],
-    [[$ARGV[4], $ARGV[5]], [$ARGV[6], $ARGV[7]]]
+  $payoff_matrices->[0] = [
+    [$ARGV[0], $ARGV[2]],
+    [$ARGV[4], $ARGV[6]]
+  ];
+  $payoff_matrices->[1] = [
+    [$ARGV[1], $ARGV[5]],
+    [$ARGV[3], $ARGV[7]]
   ];
 }
 
-my $pm =  "           Choice 1 | Choice 2\n" .
-          "          --------------------\n" .
-          "Choice 1 | %3d, %3d | %3d, %3d\n" .
-          "Choice 2 | %3d, %3d | %3d, %3d\n\n";
+for (my $i = 0; $i < $iterations; $i++) {
+  # players must choose simultaneously--don't update the frequencies in loop
+  my $choices = [undef, undef];
+  foreach my $player (0, 1) {
+    # find the probability the other player will choose the first option
+    my $other_player = ($player + 1) % 2;
+    my $frequency = $frequencies->[$other_player];
+    my $chose_first = $frequency->[0];
+    my $total_choices = $chose_first + $frequency->[1];
+    my $p = .5;
+    unless ($total_choices == 0) {
+      $p = $chose_first / $total_choices;
+    }
+    # find the expected value of each option
+    # we'll skip the /2, since we're comparing them
+    my $pm = $payoff_matrices->[$player];
+    my $first_choice_ev = $p * $pm->[0][0] + (1 - $p) * $pm->[0][1];
+    my $second_choice_ev = $p * $pm->[1][0] + (1 - $p) * $pm->[1][1];
+    # pick the choice with the highest ev, or choose at random if they tie
+    if ($first_choice_ev != $second_choice_ev) {
+      $choices->[$player] = ($first_choice_ev > $second_choice_ev) ? 0 : 1;
+    }
+    else {
+      $choices->[$player] = int(rand() + .5);
+    }
+  }
+  # update frequencies to reflect this round
+  foreach my $player (0, 1) {
+    $frequencies->[$player][$choices->[$player]]++;
+  }
+}
+
+my $pm =  "        Column 1 | Column 2\n" .
+          "       ---------------------\n" .
+          "Row 1 | %3d, %3d | %3d, %3d\n" .
+          "Row 2 | %3d, %3d | %3d, %3d\n\n";
 printf(
   $pm,
-  $grid->[0][0][0],
-  $grid->[0][0][1],
-  $grid->[0][1][0],
-  $grid->[0][1][1],
-  $grid->[1][0][0],
-  $grid->[1][0][1],
-  $grid->[1][1][0],
-  $grid->[1][1][1]
+  $payoff_matrices->[0][0][0],
+  $payoff_matrices->[1][0][0],
+  $payoff_matrices->[0][0][1],
+  $payoff_matrices->[1][1][0],
+  $payoff_matrices->[0][1][0],
+  $payoff_matrices->[1][0][1],
+  $payoff_matrices->[0][1][1],
+  $payoff_matrices->[1][1][1],
 );
-
-my $m = [
-  $grid->[0][0][0] - $grid->[0][1][0] - $grid->[1][0][0] + $grid->[1][1][0],
-  $grid->[0][0][1] - $grid->[0][1][1] - $grid->[1][0][1] + $grid->[1][1][1]
-];
-
-my $b = [
-  $grid->[1][0][0] - $grid->[1][1][0],
-  $grid->[1][0][1] - $grid->[1][1][1]
-];
-
-my $choices = [[0,0], [0,0]];
-
-my $iterations = 100000;
-
-for (my $n = 0; $n < $iterations; $n++) {
-  my $this_choice = choice($choices, $m, $b);
-  $choices->[0][$this_choice->[0]]++;
-  $choices->[1][$this_choice->[1]]++;
-}
-
-printf("Player Column:\t(%.0f%%, %.0f%%)\n",
-  ($choices->[0][0] / $iterations) * 100,
-  ($choices->[0][1] / $iterations) * 100);
-printf("Player Row:\t(%.0f%%, %.0f%%)\n",
-  ($choices->[1][0] / $iterations) * 100,
-  ($choices->[1][1] / $iterations) * 100);
-
-sub p_of_first_choice {
-  my ($n_chose_first, $n_chose_second) = @_;
-  my $total_choices = $n_chose_first + $n_chose_second;
-  if ($total_choices == 0) {
-    return .5;
-  }
-  return $n_chose_first / $total_choices;
-}
-
-sub choice {
-  my ($choices, $b, $m) = @_;
-  my $this_choice = [undef,undef];
-  foreach my $player (0,1) {
-    my $o = ($player + 1) % 2;
-    my $other_p = p_of_first_choice($choices->[$o][0], $choices->[$o][1]);
-    my $slope = $m->[$player]*$other_p + $b->[$player];
-    if ($slope == 0) {
-     $this_choice->[$player] = int(rand() + .5);
-     next;
-    }
-    $this_choice->[$player] = ($slope > 0) ? 0 : 1;
-  }
-  return $this_choice;
+foreach my $player (0, 1) {
+  printf(
+    "Player %d: (%.3f%%, %.3f%%)\n",
+    $player,
+    ($frequencies->[$player][0] / $iterations) * 100,
+    ($frequencies->[$player][1] / $iterations) * 100
+  );
 }
