@@ -62,18 +62,20 @@ printf("Player Row:\t(%.0f%%, %.0f%%)\n",
   ($choices->[1][0] / $iterations) * 100,
   ($choices->[1][1] / $iterations) * 100);
 
+sub p_of_first_choice {
+  my ($n_chose_first, $n_chose_second) = @_;
+  my $total_choices = $n_chose_first + $n_chose_second;
+  if ($total_choices == 0) {
+    return .5;
+  }
+  return $n_chose_first / $total_choices;
+}
+
 sub distributions {
   my $choices = shift;
-  # if no one has picked anything, guess
-  if ($choices->[0][0] + $choices->[0][1] == 0 ||
-    $choices->[1][0] + $choices->[1][1] == 0) {
-    return [.5,.5];
-  }
   return [
-    $choices->[0][0] /
-      ($choices->[0][0] + $choices->[0][1]),
-    $choices->[1][0] /
-      ($choices->[1][0] + $choices->[1][1])
+    p_of_first_choice($choices->[0][0], $choices->[0][1]),
+    p_of_first_choice($choices->[1][0], $choices->[1][1])
   ];
 }
 
