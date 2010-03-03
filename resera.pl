@@ -35,13 +35,22 @@ printf(
   $grid->[1][1][1]
 );
 
+my $m = [
+  $grid->[0][0][0] - $grid->[0][1][0] - $grid->[1][0][0] + $grid->[1][1][0],
+  $grid->[0][0][1] - $grid->[0][1][1] - $grid->[1][0][1] + $grid->[1][1][1]
+];
+
+my $b = [
+  $grid->[1][0][0] - $grid->[1][1][0],
+  $grid->[1][0][1] - $grid->[1][1][1]
+];
 
 my $choices = [[0,0], [0,0]];
 
 my $iterations = 10000;
 
 for (my $n = 0; $n < $iterations; $n++) {
-  my $this_choice = choice($choices,$grid);
+  my $this_choice = choice($choices, $m, $b);
   $choices->[0][$this_choice->[0]]++;
   $choices->[1][$this_choice->[1]]++;
 }
@@ -52,23 +61,6 @@ printf("Player Column:\t(%.0f%%, %.0f%%)\n",
 printf("Player Row:\t(%.0f%%, %.0f%%)\n",
   ($choices->[1][0] / $iterations) * 100,
   ($choices->[1][1] / $iterations) * 100);
-
-sub player_outcome {
-  my ($player,$row,$col,$grid) = @_;
-  return $grid->[$row][$col][$player];
-}
-
-sub player_slope {
-  my ($player,$other_p,$grid) = @_;
-  my $a = player_outcome($player,0,0,$grid);
-  my $b = player_outcome($player,0,1,$grid);
-  my $c = player_outcome($player,1,0,$grid);
-  my $d = player_outcome($player,1,1,$grid);
-  if ($player == 0) {
-    return ($a-$b-$c+$d)*$other_p + ($b-$d);
-  }
-  return ($a-$b-$c+$d)*$other_p + ($c-$d);
-}
 
 sub distributions {
   my $choices = shift;
@@ -86,30 +78,17 @@ sub distributions {
 }
 
 sub choice {
-  my ($choices, $grid) = @_;
+  my ($choices, $b, $m) = @_;
   my $dist = distributions($choices);
   my $this_choice = [undef,undef];
   foreach my $player (0,1) {
-    my $other = ($player==0) ? 1 : 0;
-    my $slope = player_slope(
-      $player,
-      $dist->[$other],
-      $grid
-    );
-    if ($slope > 0) {
-      $this_choice->[$player] = 0;
+    my $other_p =$dist->[($player + 1) % 2];
+    my $slope = $m->[$player]*$other_p + $b->[$player];
+    if ($slope == 0) {
+     $this_choice->[$player] = int(rand() + .5);
+     next;
     }
-    elsif ($slope < 0) {
-      $this_choice->[$player] = 1;
-    }
-    else {
-      if (rand() < .5) {
-        $this_choice->[$player] = 0;
-      }
-      else {
-        $this_choice->[$player] = 1;
-      }
-    }
+    $this_choice->[$player] = ($slope > 0) ? 0 : 1;
   }
   return $this_choice;
 }
