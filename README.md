@@ -1,7 +1,7 @@
 Rock 'Em Sock 'Em Rational Agents
 ====
 
-During my first Game Theory class, I read an article about (fictitious play)[http://en.wikipedia.org/wiki/Fictitious_play], a demonstration of how two rational agents might converge on Nash equilibrium in [normal-form games](http://en.wikipedia.org/wiki/Normal-form_game) by following a simple strategy:
+During my first Game Theory class, I read an article about [fictitious play](http://en.wikipedia.org/wiki/Fictitious_play), a demonstration of how two rational agents might converge on Nash equilibrium in [normal-form games](http://en.wikipedia.org/wiki/Normal-form_game) by following a simple strategy:
 
 * Given the frequency with which your opponent has chosen the first option, determine the liklihood that they will choose it for this game. If your opponent has not played this game with your before, set the liklihood to 50%.
 * Given the liklihood your opponent will choose the first option and the payoff matrix, determine the expected value of both of your options.
