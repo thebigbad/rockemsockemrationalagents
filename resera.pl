@@ -47,7 +47,7 @@ my $b = [
 
 my $choices = [[0,0], [0,0]];
 
-my $iterations = 10000;
+my $iterations = 100000;
 
 for (my $n = 0; $n < $iterations; $n++) {
   my $this_choice = choice($choices, $m, $b);
