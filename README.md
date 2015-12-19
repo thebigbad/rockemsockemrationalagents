@@ -45,6 +45,4 @@ One important thing to remember is that the agents act randomly when they don't 
 License
 -----
 
-Copyright 2010 Ryan Wolf <rwolf@borderstylo.com>
-
-Rock 'Em Sock 'Em Rational Agents is released under the romantic WTF public license. See LICENSE for more details.
+Rock 'Em Sock 'Em Rational Agents is released under the MIT License. See LICENSE for more details.
